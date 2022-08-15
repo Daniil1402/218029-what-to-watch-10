@@ -1,7 +1,19 @@
-function Player () {
+import { useParams } from 'react-router-dom';
+import { IFilm } from '../../types/film';
+
+type Props = {
+  films: IFilm[];
+}
+
+function Player ({ films }:Props) {
+  const { id } = useParams();
+
+  const film: IFilm | undefined = films.find(
+    (item) => item.id === id
+  );
   return (
     <div className="player">
-      <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
+      <video src={film?.src} className="player__video" poster={film?.poster}></video>
 
       <button type="button" className="player__exit">Exit</button>
 
