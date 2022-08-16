@@ -1,12 +1,21 @@
-import FilmCard from '../../components/film-card/film-card';
+import { IFilm } from '../../types/film';
+import FilmList from '../../components/film-list/film-list';
+import { generatePath, Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
 
 type PromoFilm = {
+  id: string;
   title: string;
   genre: string;
   date: number;
 }
 
-function Main ({title, genre, date}: PromoFilm) {
+type Props = {
+  promoFilm: PromoFilm;
+  films: IFilm[];
+}
+
+function Main ({promoFilm, films}: Props) {
   return (
     <>
       <section className="film-card">
@@ -44,26 +53,26 @@ function Main ({title, genre, date}: PromoFilm) {
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{title}</h2>
+              <h2 className="film-card__title">{promoFilm.title}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{genre}</span>
-                <span className="film-card__year">{date}</span>
+                <span className="film-card__genre">{promoFilm.genre}</span>
+                <span className="film-card__year">{promoFilm.date}</span>
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
+                <Link to={generatePath(AppRoute.Player, { id: promoFilm.id})} className="btn btn--play film-card__button">
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
-                </button>
-                <button className="btn btn--list film-card__button" type="button">
+                </Link>
+                <Link to={AppRoute.MyList} className="btn btn--list film-card__button">
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
                   </svg>
                   <span>My list</span>
                   <span className="film-card__count">9</span>
-                </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -107,26 +116,7 @@ function Main ({title, genre, date}: PromoFilm) {
           </ul>
 
           <div className="catalog__films-list">
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
+            <FilmList films={films}/>
           </div>
 
           <div className="catalog__more">
