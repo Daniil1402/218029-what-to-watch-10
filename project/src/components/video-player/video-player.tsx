@@ -6,7 +6,7 @@ type Props = {
 
 function VideoPlayer ({ film }: Props) {
   return (
-    <video src={film?.src} className="player__video" poster={film?.cover} muted autoPlay></video>
+    <video src={film?.previewVideoLink} className="player__video" poster={film?.previewImage} muted autoPlay></video>
   );
 }
 

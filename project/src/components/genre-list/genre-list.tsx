@@ -19,7 +19,7 @@ function GenreList ({ films }: Props) {
     <ul className="catalog__genres-list">
       {genreList && [...genreList].map((genre) => (
         <li className={`catalog__genres-item ${genre === activeGenre && 'catalog__genres-item--active'}`} key={genre} onClick={() => dispatch(setGenre(genre))}>
-          <a href="#" className="catalog__genres-link">{genre}</a>
+          <a className="catalog__genres-link">{genre}</a>
         </li>
       ))}
     </ul>

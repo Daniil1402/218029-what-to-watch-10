@@ -1,6 +1,5 @@
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { IFilm } from '../../types/film';
 import Player from '../../pages/player/player';
 import AddReview from '../../pages/add-review/add-review';
 import E404 from '../../pages/E404/E404';
@@ -9,21 +8,21 @@ import Main from '../../pages/main/main';
 import MyList from '../../pages/my-list/my-list';
 import SignIn from '../../pages/sign-in/sign-in';
 import PrivateRoute from '../private-route/private-route';
+import Loader from '../loader/loader';
+import { useAppSelector } from '../../hooks';
 
+export const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
+  authorizationStatus === AuthorizationStatus.Unknown;
 
-type PromoFilm = {
-  id: string;
-  title: string;
-  genre: string;
-  date: number;
-};
+function App() {
+  const {authorizationStatus, isDataLoaded, films, promoFilm} = useAppSelector((state) => state);
 
-type Props = {
-  promoFilm: PromoFilm;
-  films: IFilm[];
-}
+  if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
+    return (
+      <Loader />
+    );
+  }
 
-function App({ promoFilm, films }: Props) {
   return (
     <BrowserRouter>
       <Routes>
@@ -39,7 +38,7 @@ function App({ promoFilm, films }: Props) {
           path={AppRoute.MyList}
           element={
             <PrivateRoute
-              authorizationStatus={AuthorizationStatus.NoAuth}
+              authorizationStatus={authorizationStatus}
             >
               <MyList films={films} />
             </PrivateRoute>

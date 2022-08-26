@@ -9,11 +9,11 @@ function Player ({ films }:Props) {
   const { id } = useParams();
 
   const film: IFilm | undefined = films.find(
-    (item) => item.id === id
+    (item) => item.id.toString() === id
   );
   return (
     <div className="player">
-      <video src={film?.src} className="player__video" poster={film?.poster}></video>
+      <video src={film?.videoLink} className="player__video" poster={film?.previewImage}></video>
 
       <button type="button" className="player__exit">Exit</button>
 

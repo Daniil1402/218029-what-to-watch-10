@@ -11,13 +11,13 @@ function AddReview ({films}: Props) {
   const { id } = useParams();
 
   const film: IFilm | undefined = films.find(
-    (item) => item.id === id
+    (item) => item.id.toString() === id
   );
   return (
     <section className="film-card film-card--full">
       <div className="film-card__header">
         <div className="film-card__bg">
-          <img src={film?.bigPoster} alt={film?.title} />
+          <img src={film?.backgroundImage} alt={film?.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -34,7 +34,7 @@ function AddReview ({films}: Props) {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={generatePath(AppRoute.Film, { id: film?.id})} className="breadcrumbs__link">{film?.title}</Link>
+                <Link to={generatePath(AppRoute.Film, { id: film?.id.toString()})} className="breadcrumbs__link">{film?.name}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link">Add review</a>
@@ -55,7 +55,7 @@ function AddReview ({films}: Props) {
         </header>
 
         <div className="film-card__poster film-card__poster--small">
-          <img src={film?.poster} alt={film?.title} width="218" height="327" />
+          <img src={film?.posterImage} alt={film?.name} width="218" height="327" />
         </div>
       </div>
 
