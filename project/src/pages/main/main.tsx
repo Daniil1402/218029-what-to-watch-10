@@ -3,29 +3,15 @@ import { IFilm } from '../../types/film';
 import { AppRoute } from '../../const';
 import FilmList from '../../components/film-list/film-list';
 import GenreList from '../../components/genre-list/genre-list';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { useEffect } from 'react';
-import { setFilms } from '../../store/action';
-
-type PromoFilm = {
-  id: string;
-  title: string;
-  genre: string;
-  date: number;
-}
+import { useAppSelector } from '../../hooks';
 
 type Props = {
-  promoFilm: PromoFilm;
+  promoFilm?: IFilm;
   films: IFilm[];
 }
 
 function Main ({promoFilm, films}: Props) {
-  const filteredFilms = useAppSelector((state) => state.films);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(setFilms(films));
-  }, [dispatch]);
+  const filteredFilms = useAppSelector((state) => state.filteredFilms);
 
   return (
     <>
@@ -60,18 +46,18 @@ function Main ({promoFilm, films}: Props) {
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+              <img src={promoFilm?.posterImage} alt={promoFilm?.name} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{promoFilm.title}</h2>
+              <h2 className="film-card__title">{promoFilm?.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{promoFilm.genre}</span>
-                <span className="film-card__year">{promoFilm.date}</span>
+                <span className="film-card__genre">{promoFilm?.genre}</span>
+                <span className="film-card__year">{promoFilm?.released}</span>
               </p>
 
               <div className="film-card__buttons">
-                <Link to={generatePath(AppRoute.Player, { id: promoFilm.id})} className="btn btn--play film-card__button">
+                <Link to={generatePath(AppRoute.Player, { id: promoFilm?.id.toString()})} className="btn btn--play film-card__button">
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>

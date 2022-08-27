@@ -35,12 +35,12 @@ function FilmCard ({ film, mouseOverHandler, mouseOutHandler }: Props) {
         {isActiveFilm ? (
           <VideoPlayer film={film}/>
         ) : (
-          <img src={film.cover} alt={film.title} width="280" height="175" />
+          <img src={film.previewImage} alt={film.name} width="280" height="175" />
         )}
       </div>
       <h3 className="small-film-card__title">
-        <Link to={generatePath(AppRoute.Film, { id: film.id })} className="small-film-card__link">
-          {film.title}
+        <Link to={generatePath(AppRoute.Film, { id: film.id.toString() })} className="small-film-card__link">
+          {film.name}
         </Link>
       </h3>
     </article>

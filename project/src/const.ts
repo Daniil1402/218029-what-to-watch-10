@@ -14,3 +14,14 @@ export enum AuthorizationStatus {
 }
 
 export const ALL_GENERES = 'All genres';
+
+export const TIMEOUT_SHOW_ERROR = 5000;
+
+export enum APIRoute {
+  Promo = '/promo',
+  Films = '/films',
+  Film = '/films/{filmId}',
+  Similar = '/films/{filmId}/similar',
+  Login = '/login',
+  Logout = '/logout',
+}
