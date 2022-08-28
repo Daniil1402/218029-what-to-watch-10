@@ -3,6 +3,7 @@ import { generatePath, Link, useParams } from 'react-router-dom';
 import { IFilm } from '../../types/film';
 import { AppRoute } from '../../const';
 import FilmList from '../../components/film-list/film-list';
+import UserBlock from '../../components/user-block/user-block';
 
 type Props = {
   films: IFilm[];
@@ -34,16 +35,7 @@ function Film ({films}:Props) {
               </Link>
             </div>
 
-            <ul className="user-block">
-              <li className="user-block__item">
-                <div className="user-block__avatar">
-                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-                </div>
-              </li>
-              <li className="user-block__item">
-                <a className="user-block__link">Sign out</a>
-              </li>
-            </ul>
+            <UserBlock/>
           </header>
 
           <div className="film-card__wrap">
