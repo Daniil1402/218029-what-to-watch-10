@@ -5,6 +5,7 @@ import FilmList from '../../components/film-list/film-list';
 import GenreList from '../../components/genre-list/genre-list';
 import { useAppSelector } from '../../hooks';
 import UserBlock from '../../components/user-block/user-block';
+import Logo from '../../components/logo/logo';
 
 type Props = {
   promoFilm?: IFilm;
@@ -23,14 +24,7 @@ function Main ({promoFilm, films}: Props) {
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header film-card__head">
-          <div className="logo">
-            <a className="logo__link">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
+          <Logo/>
           <UserBlock/>
         </header>
 
@@ -82,14 +76,7 @@ function Main ({promoFilm, films}: Props) {
         </section>
 
         <footer className="page-footer">
-          <div className="logo">
-            <a className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
+          <Logo className='logo__link--light'/>
           <div className="copyright">
             <p>© 2019 What to watch Ltd.</p>
           </div>
