@@ -1,7 +1,7 @@
 import { IFilm } from '../../types/film';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {setGenre} from '../../store/action';
-import { ALL_GENERES } from '../../const';
+import { ALL_GENERES, NameSpace } from '../../const';
 
 type Props = {
   films: IFilm[];
@@ -9,7 +9,8 @@ type Props = {
 
 function GenreList ({ films }: Props) {
   const dispatch = useAppDispatch();
-  const activeGenre = useAppSelector((state) => state.genre);
+  const activeGenre = useAppSelector((state) => state[NameSpace.Data].genre);
+  // const activeGenre = useAppSelector(setGenre);
 
   const genreList = new Set<string>();
   genreList.add(ALL_GENERES);
