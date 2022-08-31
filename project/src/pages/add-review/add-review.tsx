@@ -1,5 +1,6 @@
 import { generatePath, Link, useParams } from 'react-router-dom';
 import CommentAddForm from '../../components/commentAddForm/commentAddForm';
+import Logo from '../../components/logo/logo';
 import UserBlock from '../../components/user-block/user-block';
 import { AppRoute } from '../../const';
 import { IFilm } from '../../types/film';
@@ -24,14 +25,7 @@ function AddReview ({films}: Props) {
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header">
-          <div className="logo">
-            <Link to={AppRoute.Main} className='logo__link'>
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </Link>
-          </div>
-
+          <Logo/>
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">

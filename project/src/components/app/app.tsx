@@ -12,14 +12,20 @@ import Loader from '../loader/loader';
 import { useAppSelector } from '../../hooks';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { getFilms, getLoadedDataStatus, getLoadedPromoFilm, loadPromoFilm } from '../../store/films-data/selectors';
 
 export const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
   authorizationStatus === AuthorizationStatus.Unknown;
 
 function App() {
-  const {authorizationStatus, isDataLoaded, films, promoFilm} = useAppSelector((state) => state);
+  const films = useAppSelector(getFilms);
+  const promoFilm = useAppSelector(loadPromoFilm);
+  const isDataLoaded = useAppSelector(getLoadedDataStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isPromoFilmLoaded = useAppSelector(getLoadedPromoFilm);
 
-  if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
+  if (isCheckedAuth(authorizationStatus) || isDataLoaded || isPromoFilmLoaded) {
     return (
       <Loader />
     );
