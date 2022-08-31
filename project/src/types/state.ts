@@ -14,7 +14,7 @@ export type FilmsData = {
   films: Films;
   isDataLoaded: boolean;
   genre: string;
-  promoFilm: IFilm | undefined; 
+  promoFilm: IFilm | undefined;
   isPromoFilmLoaded: boolean;
 };
 
