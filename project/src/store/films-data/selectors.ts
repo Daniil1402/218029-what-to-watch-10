@@ -4,9 +4,10 @@ import { Films, IFilm } from '../../types/film';
 import {State} from '../../types/state';
 
 export const getFilms = (state: State): Films => state[NameSpace.Data].films;
-export const loadPromoFilm = (state: State): IFilm => state[NameSpace.Data].promoFilm;
 export const getLoadedDataStatus = (state: State): boolean => state[NameSpace.Data].isDataLoaded;
 export const getGenre = (state: State): string => state[NameSpace.Data].genre;
+export const loadPromoFilm = (state: State): IFilm | undefined => state[NameSpace.Data].promoFilm;
+export const getLoadedPromoFilm = (state: State): boolean => state[NameSpace.Data].isPromoFilmLoaded;
 
 export const filterFilms = createSelector(
   [getFilms, getGenre],

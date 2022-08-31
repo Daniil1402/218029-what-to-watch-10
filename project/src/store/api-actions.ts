@@ -2,27 +2,11 @@ import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state';
 import {Films, IFilm} from '../types/film';
-// import {redirectToRoute, setError} from './action';
 import {redirectToRoute} from './action';
-// import {APIRoute, AppRoute, TIMEOUT_SHOW_ERROR} from '../const';
 import {APIRoute, AppRoute} from '../const';
-// import { store } from './index';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { dropToken, saveToken } from '../services/token';
-
-
-// export const clearErrorAction = createAsyncThunk(
-//   'films/clearError',
-//   () => {
-//     setTimeout(
-//       // () => store.dispatch(setError(null)),
-//       () => console.log('113')
-//       ,
-//       TIMEOUT_SHOW_ERROR,
-//     );
-//   },
-// );
 
 export const fetchPromoFilmAction = createAsyncThunk<IFilm, undefined, {
   dispatch: AppDispatch,

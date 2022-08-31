@@ -9,6 +9,7 @@ const initialState: FilmsData = {
   isDataLoaded: false,
   genre: ALL_GENERES,
   promoFilm: undefined,
+  isPromoFilmLoaded: false,
 };
 
 export const filmsData = createSlice({
@@ -28,10 +29,11 @@ export const filmsData = createSlice({
         state.genre = action.payload;
       })
       .addCase(fetchPromoFilmAction.pending, (state, action) => {
-        state.promoFilm = action.payload;
+        state.isPromoFilmLoaded = true;
       })
       .addCase(fetchPromoFilmAction.fulfilled, (state, action) => {
         state.promoFilm = action.payload;
+        state.isPromoFilmLoaded = false;
       });
   }
 });

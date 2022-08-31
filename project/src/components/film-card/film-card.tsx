@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { Link, generatePath } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { IFilm } from '../../types/film';
@@ -14,23 +14,27 @@ function FilmCard ({ film, mouseOverHandler, mouseOutHandler }: Props) {
   const [isActiveFilm, setIsActiveFilm] = useState(false);
 
   const timerRef = useRef<number | null>(null);
-  const switchMediaVideo = function () {
+  const switchMediaVideo = useCallback(() => {
     mouseOverHandler(film);
     timerRef.current = window.setTimeout(() => setIsActiveFilm(true), 1000);
-  };
+  },
+  []
+  );
 
-  const switchMediaImage = function () {
+  const switchMediaImage = useCallback(() => {
     mouseOutHandler();
     setIsActiveFilm(false);
     if (timerRef.current) {
       clearTimeout(timerRef.current);
     }
-  };
+  },
+  []
+  );
 
   useEffect(() => {timerRef.current && clearTimeout(timerRef.current);}, [isActiveFilm]);
 
   return (
-    <article className="small-film-card catalog__films-card" onMouseOver={() => switchMediaVideo()} onMouseOut={() => switchMediaImage()}>
+    <article className="small-film-card catalog__films-card" onMouseOver={switchMediaVideo} onMouseOut={switchMediaImage}>
       <div className="small-film-card__image">
         {isActiveFilm ? (
           <VideoPlayer film={film}/>
@@ -47,4 +51,4 @@ function FilmCard ({ film, mouseOverHandler, mouseOutHandler }: Props) {
   );
 }
 
-export default FilmCard;
+export default memo(FilmCard);

@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus, NameSpace } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -7,7 +8,6 @@ import { logoutAction } from '../../store/api-actions';
 function UserBlock () {
   const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector((state) => state[NameSpace.User].authorizationStatus);
-  // const activeGenre = useAppSelector((state) => state[NameSpace.Data].genre);
   return (
     <ul className="user-block">
       {authorizationStatus === AuthorizationStatus.Auth &&
@@ -27,4 +27,4 @@ function UserBlock () {
   );
 }
 
-export default UserBlock;
+export default memo(UserBlock);

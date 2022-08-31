@@ -15,6 +15,7 @@ export type FilmsData = {
   isDataLoaded: boolean;
   genre: string;
   promoFilm: IFilm | undefined; 
+  isPromoFilmLoaded: boolean;
 };
 
 export type ErrorProcess = {

@@ -9,18 +9,17 @@ import Logo from '../../components/logo/logo';
 import { filterFilms } from '../../store/films-data/selectors';
 
 type Props = {
-  promoFilm: IFilm;
+  promoFilm?: IFilm;
   films: IFilm[];
 }
 
 function Main ({promoFilm, films}: Props) {
-  // const {filteredFilms} = useAppSelector((state) => state);
   const filteredFilms = useAppSelector(filterFilms);
   return (
     <>
       <section className="film-card">
         <div className="film-card__bg">
-          <img src={promoFilm.backgroundImage} alt={promoFilm.name} />
+          <img src={promoFilm?.backgroundImage} alt={promoFilm?.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -33,18 +32,18 @@ function Main ({promoFilm, films}: Props) {
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src={promoFilm.posterImage} alt={promoFilm.name} width="218" height="327" />
+              <img src={promoFilm?.posterImage} alt={promoFilm?.name} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{promoFilm.name}</h2>
+              <h2 className="film-card__title">{promoFilm?.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{promoFilm.genre}</span>
-                <span className="film-card__year">{promoFilm.released}</span>
+                <span className="film-card__genre">{promoFilm?.genre}</span>
+                <span className="film-card__year">{promoFilm?.released}</span>
               </p>
 
               <div className="film-card__buttons">
-                <Link to={generatePath(AppRoute.Player, { id: promoFilm.id.toString()})} className="btn btn--play film-card__button">
+                <Link to={generatePath(AppRoute.Player, { id: promoFilm?.id.toString()})} className="btn btn--play film-card__button">
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
