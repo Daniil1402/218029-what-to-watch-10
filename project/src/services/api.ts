@@ -1,5 +1,8 @@
 import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError} from 'axios';
 import {StatusCodes} from 'http-status-codes';
+import { AppRoute } from '../const';
+import { store } from '../store';
+import { redirectToRoute } from '../store/action';
 import { processErrorHandle } from './process-error-handle';
 import { getToken } from './token';
 
@@ -38,7 +41,9 @@ export const createAPI = (): AxiosInstance => {
       if (error.response && shouldDisplayError(error.response)) {
         processErrorHandle(error.response.data.error);
       }
-
+      if (error.response && error.response.status === StatusCodes.NOT_FOUND) {
+        store.dispatch(redirectToRoute(AppRoute.NOTFOUND));
+      }
       throw error;
     }
   );

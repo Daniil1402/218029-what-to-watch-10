@@ -1,8 +1,15 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
+import { useParams } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks';
+import { addCommentAction } from '../../store/api-actions';
+import { Comment } from '../../types/comment';
 
 function CommentAddForm () {
+  const { id } = useParams();
+  const dispatch = useAppDispatch();
+
   const [formData, setFormData] = useState({
-    rating: '',
+    rating: 0,
     reviewText: '',
   });
 
@@ -11,9 +18,25 @@ function CommentAddForm () {
     setFormData({...formData, [name]: value});
   };
 
+  const onSubmit = (comment: Comment) => {
+    dispatch(addCommentAction(comment));
+  };
+
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    if (id) {
+      onSubmit({
+        id: id,
+        comment: formData.reviewText,
+        rating: +formData.rating,
+      });
+    }
+  };
+
   return (
     <div className="add-review">
-      <form action="#" className="add-review__form">
+      <form action="#" className="add-review__form" onSubmit={handleSubmit}>
         <div className="rating">
           <div className="rating__stars">
             <input onChange={fieldChangeHandle} className="rating__input" id="star-10" type="radio" name="rating" value="10" />

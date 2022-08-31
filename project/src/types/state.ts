@@ -18,6 +18,13 @@ export type FilmsData = {
   isPromoFilmLoaded: boolean;
 };
 
+export type FilmData = {
+  film: IFilm | null;
+  isFilmLoaded: boolean;
+  similarFilms: Films;
+  isSimilarFilmsLoaded: boolean;
+};
+
 export type ErrorProcess = {
   error: string | null;
 }

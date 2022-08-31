@@ -54,7 +54,7 @@ function App() {
         />
         <Route
           path={AppRoute.Film}
-          element={<Film films={films} />}
+          element={<Film />}
         />
         <Route
           path={AppRoute.AddReview}

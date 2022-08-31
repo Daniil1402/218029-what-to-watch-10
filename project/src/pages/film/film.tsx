@@ -1,21 +1,53 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { generatePath, Link, useParams } from 'react-router-dom';
-import { IFilm } from '../../types/film';
-import { AppRoute } from '../../const';
+import { AppRoute, AuthorizationStatus, RatingLevel } from '../../const';
 import FilmList from '../../components/film-list/film-list';
 import UserBlock from '../../components/user-block/user-block';
 import Logo from '../../components/logo/logo';
+import { store } from '../../store';
+import { fetchFilmAction, fetchSimilarFilmsAction } from '../../store/api-actions';
+import { useAppSelector } from '../../hooks';
+import Loader from '../../components/loader/loader';
+import { getLoadedFilm, getLoadedSimilarFilms, loadFilm, loadSimilarFilms } from '../../store/film-data/selectors';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
-type Props = {
-  films: IFilm[];
-}
-
-function Film ({films}:Props) {
+function Film () {
   const { id } = useParams();
 
-  const film: IFilm | undefined = films.find(
-    (item) => item.id.toString() === id
-  );
+  const film = useAppSelector(loadFilm);
+  const isFilmLoaded = useAppSelector(getLoadedFilm);
+  const similarFilms = useAppSelector(loadSimilarFilms);
+  const isSimilarFilmLoaded = useAppSelector(getLoadedSimilarFilms);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
+  const generateRatingLevel = (rating: number) => {
+    if (rating < 3) {
+      return RatingLevel.Bad;
+    }
+    if (rating < 5) {
+      return RatingLevel.Normal;
+    }
+    if (rating < 8) {
+      return RatingLevel.Good;
+    }
+    if (rating < 10) {
+      return RatingLevel.VeryGood;
+    }
+    return RatingLevel.Awesome;
+  };
+
+  useEffect(() => {
+    if (id) {
+      store.dispatch(fetchFilmAction(id));
+      store.dispatch(fetchSimilarFilmsAction(`/${id}/similar`));
+    }
+  }, [id]);
+
+  if (!film || isFilmLoaded || isSimilarFilmLoaded) {
+    return (
+      <Loader />
+    );
+  }
 
   return (
     <>
@@ -54,9 +86,11 @@ function Film ({films}:Props) {
                   <span>My list</span>
                   <span className="film-card__count">9</span>
                 </Link>
-                <Link to={generatePath(AppRoute.AddReview, { id: film?.id.toString()})} className="btn film-card__button">
-                  Add review
-                </Link>
+                {authorizationStatus === AuthorizationStatus.Auth
+                &&
+                  <Link to={generatePath(AppRoute.AddReview, { id: film?.id.toString()})} className="btn film-card__button">
+                    Add review
+                  </Link>}
               </div>
             </div>
           </div>
@@ -86,8 +120,8 @@ function Film ({films}:Props) {
               <div className="film-rating">
                 <div className="film-rating__score">{film?.rating}</div>
                 <p className="film-rating__meta">
-                  {/* <span className="film-rating__level">{film?.reviews.level}</span>
-                  <span className="film-rating__count">{film?.reviews.list.length} ratings</span> */}
+                  <span className="film-rating__level">{generateRatingLevel(film?.rating)}</span>
+                  <span className="film-rating__count">{film?.scoresCount}</span>
                 </p>
               </div>
 
@@ -116,7 +150,7 @@ function Film ({films}:Props) {
           <h2 className="catalog__title">More like this</h2>
 
           <div className="catalog__films-list">
-            <FilmList films={films}/>
+            <FilmList films={similarFilms}/>
           </div>
         </section>
 

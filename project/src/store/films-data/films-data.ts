@@ -1,8 +1,8 @@
-import {createSlice} from '@reduxjs/toolkit';
-import {ALL_GENERES, NameSpace} from '../../const';
-import {FilmsData} from '../../types/state';
+import { createSlice } from '@reduxjs/toolkit';
+import { ALL_GENERES, NameSpace } from '../../const';
+import { FilmsData } from '../../types/state';
 import { setGenre } from '../action';
-import {fetchFilmsAction, fetchPromoFilmAction} from '../api-actions';
+import { fetchFilmsAction, fetchPromoFilmAction } from '../api-actions';
 
 const initialState: FilmsData = {
   films: [],
@@ -13,7 +13,7 @@ const initialState: FilmsData = {
 };
 
 export const filmsData = createSlice({
-  name: NameSpace.Data,
+  name: NameSpace.Films,
   initialState,
   reducers: {},
   extraReducers(builder) {

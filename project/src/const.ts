@@ -5,6 +5,7 @@ export enum AppRoute {
   Film = '/films/:id',
   AddReview = '/films/:id/review',
   Player = '/player/:id',
+  NOTFOUND = '/404',
 }
 
 export enum AuthorizationStatus {
@@ -20,14 +21,23 @@ export const TIMEOUT_SHOW_ERROR = 5000;
 export enum APIRoute {
   Promo = '/promo',
   Films = '/films',
-  Film = '/films/{filmId}',
-  Similar = '/films/{filmId}/similar',
+  Film = '/films/',
   Login = '/login',
   Logout = '/logout',
+  Comments = '/comments/',
 }
 
 export enum NameSpace {
-  Data = 'DATA',
+  Films = 'FILMS',
+  Film = 'FILM',
   User = 'USER',
   Error = 'ERROR',
+}
+
+export enum RatingLevel {
+  Awesome = 'Awesome',
+  VeryGood = 'Very good',
+  Good = 'Good',
+  Normal = 'Normal',
+  Bad = 'Bad',
 }

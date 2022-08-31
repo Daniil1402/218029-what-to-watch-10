@@ -9,8 +9,7 @@ type Props = {
 
 function GenreList ({ films }: Props) {
   const dispatch = useAppDispatch();
-  const activeGenre = useAppSelector((state) => state[NameSpace.Data].genre);
-  // const activeGenre = useAppSelector(setGenre);
+  const activeGenre = useAppSelector((state) => state[NameSpace.Films].genre);
 
   const genreList = new Set<string>();
   genreList.add(ALL_GENERES);
