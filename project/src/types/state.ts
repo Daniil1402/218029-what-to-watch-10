@@ -1,6 +1,6 @@
 import { store } from '../store/index.js';
 import {AuthorizationStatus} from '../const';
-import { Films, IFilm } from './film';
+import { Films, IReviews, IFilm } from './film';
 
 export type State = ReturnType<typeof store.getState>;
 
@@ -16,6 +16,9 @@ export type FilmsData = {
   genre: string;
   promoFilm: IFilm | undefined;
   isPromoFilmLoaded: boolean;
+  favoriteFilms: Films;
+  isfavoriteFilmsLoaded: boolean;
+  favoriteFilmsQuantity: number;
 };
 
 export type FilmData = {
@@ -23,6 +26,8 @@ export type FilmData = {
   isFilmLoaded: boolean;
   similarFilms: Films;
   isSimilarFilmsLoaded: boolean;
+  reviews: IReviews;
+  isReviewsLoaded: boolean;
 };
 
 export type ErrorProcess = {

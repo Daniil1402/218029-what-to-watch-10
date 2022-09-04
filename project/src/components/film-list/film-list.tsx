@@ -4,9 +4,10 @@ import FilmCard from '../film-card/film-card';
 
 type Props = {
   films: Films;
+  quantityShow?: number;
 }
 
-function FilmList ({ films }: Props) {
+function FilmList ({ films, quantityShow }: Props) {
   const [, setFilmActive] = useState<IFilm | null>(null);
 
   const mouseOverHandler = useCallback(
@@ -20,9 +21,17 @@ function FilmList ({ films }: Props) {
   );
 
   return (
-    <>
-      {films.map((film) => <FilmCard film={film} key={film.id} mouseOverHandler={mouseOverHandler} mouseOutHandler={mouseOutHandler} /> )}
-    </>
+    <div className="catalog__films-list">
+      {films.map((film, index) =>
+        (quantityShow
+          ?
+          (index < quantityShow && (<FilmCard film={film} key={film.id} mouseOverHandler={mouseOverHandler} mouseOutHandler={mouseOutHandler} />)
+          )
+          :
+          (<FilmCard film={film} key={film.id} mouseOverHandler={mouseOverHandler} mouseOutHandler={mouseOutHandler} />)
+        )
+      )}
+    </div>
   );
 }
 

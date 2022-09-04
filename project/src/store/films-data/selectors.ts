@@ -13,3 +13,7 @@ export const filterFilms = createSelector(
   [getFilms, getGenre],
   (films, genre) => films.filter((film) => film.genre === genre || genre === ALL_GENERES)
 );
+
+export const getFavoriteFilms = (state: State): Films => state[NameSpace.Films].favoriteFilms;
+export const getLoadedFavoriteFilms = (state: State): boolean => state[NameSpace.Films].isfavoriteFilmsLoaded;
+export const getFavoriteFilmsQuantity = (state: State): number => state[NameSpace.Films].favoriteFilmsQuantity;

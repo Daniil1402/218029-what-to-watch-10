@@ -1,4 +1,6 @@
-import { useParams } from 'react-router-dom';
+import { generatePath, Link, useParams } from 'react-router-dom';
+import Loader from '../../components/loader/loader';
+import { AppRoute } from '../../const';
 import { IFilm } from '../../types/film';
 
 type Props = {
@@ -11,11 +13,13 @@ function Player ({ films }:Props) {
   const film: IFilm | undefined = films.find(
     (item) => item.id.toString() === id
   );
+
+  if (!film) {return <Loader/>;}
   return (
     <div className="player">
       <video src={film?.videoLink} className="player__video" poster={film?.previewImage}></video>
 
-      <button type="button" className="player__exit">Exit</button>
+      <Link to={generatePath(AppRoute.Film, { id: film.id.toString() })} className="player__exit">Exit</Link>
 
       <div className="player__controls">
         <div className="player__controls-row">

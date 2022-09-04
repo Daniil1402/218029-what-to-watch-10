@@ -1,20 +1,30 @@
-import { generatePath, Link } from 'react-router-dom';
-import { IFilm } from '../../types/film';
-import { AppRoute } from '../../const';
+import { Films, IFilm } from '../../types/film';
 import FilmList from '../../components/film-list/film-list';
 import GenreList from '../../components/genre-list/genre-list';
 import { useAppSelector } from '../../hooks';
 import UserBlock from '../../components/user-block/user-block';
 import Logo from '../../components/logo/logo';
 import { filterFilms } from '../../store/films-data/selectors';
+import FilmButtons from '../../components/film-buttons/film-buttons';
+import { store } from '../../store';
+import { fetchFavoriteFilmsAction } from '../../store/api-actions';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { AuthorizationStatus } from '../../const';
+import { useEffect } from 'react';
 
 type Props = {
   promoFilm?: IFilm;
-  films: IFilm[];
+  films: Films;
 }
 
 function Main ({promoFilm, films}: Props) {
   const filteredFilms = useAppSelector(filterFilms);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {store.dispatch(fetchFavoriteFilmsAction());}
+  }, [promoFilm, authorizationStatus]);
+
   return (
     <>
       <section className="film-card">
@@ -41,22 +51,7 @@ function Main ({promoFilm, films}: Props) {
                 <span className="film-card__genre">{promoFilm?.genre}</span>
                 <span className="film-card__year">{promoFilm?.released}</span>
               </p>
-
-              <div className="film-card__buttons">
-                <Link to={generatePath(AppRoute.Player, { id: promoFilm?.id.toString()})} className="btn btn--play film-card__button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </Link>
-                <Link to={AppRoute.MyList} className="btn btn--list film-card__button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">9</span>
-                </Link>
-              </div>
+              <FilmButtons film={promoFilm} />
             </div>
           </div>
         </div>
@@ -67,9 +62,7 @@ function Main ({promoFilm, films}: Props) {
 
           <GenreList films={films}/>
 
-          <div className="catalog__films-list">
-            <FilmList films={filteredFilms}/>
-          </div>
+          <FilmList films={filteredFilms}/>
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>

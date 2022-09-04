@@ -48,7 +48,7 @@ function App() {
             <PrivateRoute
               authorizationStatus={authorizationStatus}
             >
-              <MyList films={films} />
+              <MyList />
             </PrivateRoute>
           }
         />

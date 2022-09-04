@@ -9,8 +9,11 @@ export const redirect: Middleware<unknown, Reducer> =
     (next) =>
       (action) => {
         if (action.type === 'films/redirectToRoute') {
-          browserHistory.push(action.payload);
+          if (action.payload === 'previous') {
+            browserHistory.back();
+          } else {
+            browserHistory.push(action.payload);
+          }
         }
-
         return next(action);
       };

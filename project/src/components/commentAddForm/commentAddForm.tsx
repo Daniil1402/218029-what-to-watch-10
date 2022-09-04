@@ -13,6 +13,8 @@ function CommentAddForm () {
     reviewText: '',
   });
 
+  const isButtonDisabled = !formData.rating || formData.reviewText.length < 50;
+
   const fieldChangeHandle = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const {name, value} = evt.target;
     setFormData({...formData, [name]: value});
@@ -72,11 +74,10 @@ function CommentAddForm () {
         </div>
 
         <div className="add-review__text">
-          <textarea onChange={fieldChangeHandle} className="add-review__textarea" name="reviewText" id="review-text" placeholder="Review text"></textarea>
+          <textarea onChange={fieldChangeHandle} className="add-review__textarea" name="reviewText" id="review-text" placeholder="Review text" minLength={50} maxLength={400} required></textarea>
           <div className="add-review__submit">
-            <button className="add-review__btn" type="submit">Post</button>
+            <button className="add-review__btn" type="submit" disabled={isButtonDisabled}>Post</button>
           </div>
-
         </div>
       </form>
     </div>

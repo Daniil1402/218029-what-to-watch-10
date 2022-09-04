@@ -1,9 +1,3 @@
-export type IReviews = {
-  score: string;
-  level: string;
-  list: string[];
-};
-
 export type IFilm = {
   id: number;
   name: string;
@@ -25,3 +19,16 @@ export type IFilm = {
 }
 
 export type Films = IFilm[];
+
+export type IReview = {
+  comment: string;
+  date: string;
+  id: number;
+  rating: number;
+  user: {
+    id: number;
+    name: string;
+  }
+};
+
+export type IReviews = IReview[];
