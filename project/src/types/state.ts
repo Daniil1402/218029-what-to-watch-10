@@ -28,6 +28,9 @@ export type FilmData = {
   isSimilarFilmsLoaded: boolean;
   reviews: IReviews;
   isReviewsLoaded: boolean;
+  isCommentAdded: boolean,
+  isCommentPending: boolean,
+  isCommentError: boolean,
 };
 
 export type ErrorProcess = {

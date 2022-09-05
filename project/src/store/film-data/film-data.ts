@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { FilmData } from '../../types/state';
-import { fetchCommentsAction, fetchFilmAction, fetchSimilarFilmsAction } from '../api-actions';
+import { resetCommentData } from '../action';
+import { addCommentAction, fetchCommentsAction, fetchFilmAction, fetchSimilarFilmsAction } from '../api-actions';
 
 const initialState: FilmData = {
   film: null,
@@ -10,6 +11,9 @@ const initialState: FilmData = {
   isSimilarFilmsLoaded: false,
   reviews: [],
   isReviewsLoaded: false,
+  isCommentAdded: false,
+  isCommentPending: false,
+  isCommentError: false,
 };
 
 export const filmData = createSlice({
@@ -38,6 +42,23 @@ export const filmData = createSlice({
       .addCase(fetchCommentsAction.fulfilled, (state, action) => {
         state.reviews = action.payload;
         state.isReviewsLoaded = false;
+      })
+      .addCase(addCommentAction.pending, (state) => {
+        state.isCommentAdded = false;
+        state.isCommentPending = true;
+      })
+      .addCase(addCommentAction.fulfilled, (state) => {
+        state.isCommentAdded = true;
+        state.isCommentPending = false;
+      })
+      .addCase(addCommentAction.rejected, (state) => {
+        state.isCommentAdded = false;
+        state.isCommentPending = false;
+        state.isCommentError = true;
+      })
+      .addCase(resetCommentData, (state) => {
+        state.isCommentAdded = false;
+        state.isCommentPending = false;
       });
   }
 });

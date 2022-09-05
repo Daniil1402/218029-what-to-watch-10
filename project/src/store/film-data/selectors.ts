@@ -8,3 +8,5 @@ export const loadSimilarFilms = (state: State): Films => state[NameSpace.Film].s
 export const getLoadedSimilarFilms = (state: State): boolean => state[NameSpace.Film].isSimilarFilmsLoaded;
 export const getReviews = (state: State): IReviews => state[NameSpace.Film].reviews;
 export const getLoadedReviews = (state: State): boolean => state[NameSpace.Film].isReviewsLoaded;
+export const getIsCommentAdded = (state: State): boolean => state[NameSpace.Film].isCommentAdded;
+export const getIsCommentPending = (state: State): boolean => state[NameSpace.Film].isCommentPending;

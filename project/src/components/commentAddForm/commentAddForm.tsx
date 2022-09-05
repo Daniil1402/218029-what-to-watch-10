@@ -1,19 +1,32 @@
-import { useState, ChangeEvent, FormEvent } from 'react';
-import { useParams } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks';
+import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
+import { generatePath, Navigate, useParams } from 'react-router-dom';
+import { AppRoute } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { resetCommentData } from '../../store/action';
 import { addCommentAction } from '../../store/api-actions';
+import { getIsCommentAdded, getIsCommentPending } from '../../store/film-data/selectors';
 import { Comment } from '../../types/comment';
 
 function CommentAddForm () {
   const { id } = useParams();
   const dispatch = useAppDispatch();
 
+  const isCommentAdded = useAppSelector(getIsCommentAdded);
+  const isCommentPending = useAppSelector(getIsCommentPending);
+
   const [formData, setFormData] = useState({
     rating: 0,
     reviewText: '',
   });
 
-  const isButtonDisabled = !formData.rating || formData.reviewText.length < 50;
+  useEffect(() => () => {dispatch(resetCommentData());}, [dispatch]);
+
+  if (isCommentAdded) {
+    return <Navigate to={generatePath(AppRoute.Film, { id: id })} replace />;
+  }
+
+
+  const isButtonDisabled = !formData.rating || formData.reviewText.length < 50 || isCommentPending;
 
   const fieldChangeHandle = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const {name, value} = evt.target;

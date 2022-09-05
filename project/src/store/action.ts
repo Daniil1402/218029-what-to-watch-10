@@ -6,3 +6,7 @@ export const setGenre = createAction('films/setGenre', (value) => ({payload: val
 export const setError = createAction<string | null>('films/setError');
 
 export const redirectToRoute = createAction<AppRoute | string>('films/redirectToRoute');
+
+export const resetCommentData = createAction('films/resetCommentData');
+
+export const resetCommentError = createAction('films/resetCommentError');
