@@ -2,10 +2,12 @@ import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { generatePath, Navigate, useParams } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { resetCommentData } from '../../store/action';
+import { resetCommentData, resetIsCommentError } from '../../store/action';
 import { addCommentAction } from '../../store/api-actions';
-import { getIsCommentAdded, getIsCommentPending } from '../../store/film-data/selectors';
+import { getError } from '../../store/error-process/selectors';
+import { getIsCommentAdded, getIsCommentError, getIsCommentPending } from '../../store/film-data/selectors';
 import { Comment } from '../../types/comment';
+import ErrorMessage from '../error-message/error-message';
 
 function CommentAddForm () {
   const { id } = useParams();
@@ -13,18 +15,22 @@ function CommentAddForm () {
 
   const isCommentAdded = useAppSelector(getIsCommentAdded);
   const isCommentPending = useAppSelector(getIsCommentPending);
+  const error = useAppSelector(getError);
+  const isCommentError = useAppSelector(getIsCommentError);
 
   const [formData, setFormData] = useState({
     rating: 0,
     reviewText: '',
   });
 
-  useEffect(() => () => {dispatch(resetCommentData());}, [dispatch]);
+  useEffect(() => () => {
+    dispatch(resetCommentData());
+    dispatch(resetIsCommentError());
+  }, [dispatch]);
 
   if (isCommentAdded) {
     return <Navigate to={generatePath(AppRoute.Film, { id: id })} replace />;
   }
-
 
   const isButtonDisabled = !formData.rating || formData.reviewText.length < 50 || isCommentPending;
 
@@ -49,8 +55,13 @@ function CommentAddForm () {
     }
   };
 
+  if (error) {
+    return <ErrorMessage/>;
+  }
+
   return (
     <div className="add-review">
+      {isCommentError && <ErrorMessage message='Sorry'/>}
       <form action="#" className="add-review__form" onSubmit={handleSubmit}>
         <div className="rating">
           <div className="rating__stars">

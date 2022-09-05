@@ -9,4 +9,4 @@ export const redirectToRoute = createAction<AppRoute | string>('films/redirectTo
 
 export const resetCommentData = createAction('films/resetCommentData');
 
-export const resetCommentError = createAction('films/resetCommentError');
+export const resetIsCommentError = createAction('films/resetIsCommentError');

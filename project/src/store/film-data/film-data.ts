@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { FilmData } from '../../types/state';
-import { resetCommentData } from '../action';
+import { resetCommentData, resetIsCommentError } from '../action';
 import { addCommentAction, fetchCommentsAction, fetchFilmAction, fetchSimilarFilmsAction } from '../api-actions';
 
 const initialState: FilmData = {
@@ -59,6 +59,9 @@ export const filmData = createSlice({
       .addCase(resetCommentData, (state) => {
         state.isCommentAdded = false;
         state.isCommentPending = false;
+      })
+      .addCase(resetIsCommentError, (state) => {
+        state.isCommentError = false;
       });
   }
 });

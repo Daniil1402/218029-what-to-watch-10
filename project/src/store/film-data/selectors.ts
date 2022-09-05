@@ -10,3 +10,4 @@ export const getReviews = (state: State): IReviews => state[NameSpace.Film].revi
 export const getLoadedReviews = (state: State): boolean => state[NameSpace.Film].isReviewsLoaded;
 export const getIsCommentAdded = (state: State): boolean => state[NameSpace.Film].isCommentAdded;
 export const getIsCommentPending = (state: State): boolean => state[NameSpace.Film].isCommentPending;
+export const getIsCommentError = (state: State): boolean => state[NameSpace.Film].isCommentError;
