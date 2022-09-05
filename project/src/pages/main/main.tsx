@@ -59,14 +59,8 @@ function Main ({promoFilm, films}: Props) {
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-
           <GenreList films={films}/>
-
-          <FilmList films={filteredFilms}/>
-
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+          <FilmList films={filteredFilms} isActiveShowMore/>
         </section>
 
         <footer className="page-footer">

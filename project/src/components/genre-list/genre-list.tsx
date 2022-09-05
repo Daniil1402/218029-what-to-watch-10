@@ -7,6 +7,11 @@ type Props = {
   films: IFilm[];
 }
 
+const styles = {
+  background: 'none',
+  border: 'none',
+};
+
 function GenreList ({ films }: Props) {
   const dispatch = useAppDispatch();
   const activeGenre = useAppSelector((state) => state[NameSpace.Films].genre);
@@ -19,7 +24,7 @@ function GenreList ({ films }: Props) {
     <ul className="catalog__genres-list">
       {genreList && [...genreList].map((genre) => (
         <li className={`catalog__genres-item ${genre === activeGenre && 'catalog__genres-item--active'}`} key={genre} onClick={() => dispatch(setGenre(genre))}>
-          <a className="catalog__genres-link">{genre}</a>
+          <button style={styles} className="catalog__genres-link">{genre}</button>
         </li>
       ))}
     </ul>

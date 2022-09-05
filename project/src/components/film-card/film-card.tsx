@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import { Link, generatePath } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { IFilm } from '../../types/film';
@@ -14,22 +14,18 @@ function FilmCard ({ film, mouseOverHandler, mouseOutHandler }: Props) {
   const [isActiveFilm, setIsActiveFilm] = useState(false);
 
   const timerRef = useRef<number | null>(null);
-  const switchMediaVideo = useCallback(() => {
+  const switchMediaVideo = () => {
     mouseOverHandler(film);
     timerRef.current = window.setTimeout(() => setIsActiveFilm(true), 1000);
-  },
-  []
-  );
+  };
 
-  const switchMediaImage = useCallback(() => {
+  const switchMediaImage = () => {
     mouseOutHandler();
     setIsActiveFilm(false);
     if (timerRef.current) {
       clearTimeout(timerRef.current);
     }
-  },
-  []
-  );
+  };
 
   useEffect(() => {timerRef.current && clearTimeout(timerRef.current);}, [isActiveFilm]);
 

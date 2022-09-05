@@ -32,7 +32,9 @@ function AddReview ({films}: Props) {
                 <Link to={generatePath(AppRoute.Film, { id: film?.id.toString()})} className="breadcrumbs__link">{film?.name}</Link>
               </li>
               <li className="breadcrumbs__item">
-                <a className="breadcrumbs__link">Add review</a>
+                <Link to={generatePath(AppRoute.AddReview, { id: film?.id.toString()})} className="breadcrumbs__link">
+                  Add review
+                </Link>
               </li>
             </ul>
           </nav>

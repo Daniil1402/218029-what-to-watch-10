@@ -4,6 +4,10 @@ import { AppRoute, AuthorizationStatus, NameSpace } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/api-actions';
 
+const styles = {
+  background: 'none',
+  border: 'none',
+};
 
 function UserBlock () {
   const dispatch = useAppDispatch();
@@ -20,7 +24,7 @@ function UserBlock () {
         </li>}
       <li className="user-block__item">
         {authorizationStatus === AuthorizationStatus.Auth
-          ? <a className="user-block__link" onClick={() => dispatch(logoutAction())}>Sign out</a>
+          ? <button style={styles} className="user-block__link" onClick={() => dispatch(logoutAction())}>Sign out</button>
           : <Link to={AppRoute.SignIn} className="user-block__link">Sign in</Link>}
       </li>
     </ul>
