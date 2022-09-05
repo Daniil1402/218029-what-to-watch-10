@@ -15,19 +15,19 @@ function Player () {
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [timeLeft, setTimeLeft] = useState('');
+  const [timeLeft, setTimeLeft] = useState(0);
 
   const togglePlay = () => {
     if (videoRef.current) {
       if (videoRef.current.paused) {
-        videoRef.current.play();
         setIsPlaying(true);
+        videoRef.current.play();
         changingTimeLeft();
       } else {
         videoRef.current.pause();
         setIsPlaying(false);
         if (timerRef.current) {
-          clearTimeout(timerRef.current);
+          clearInterval(timerRef.current);
         }
       }
     }
@@ -35,36 +35,33 @@ function Player () {
 
   const convertTime = (time: number) => {
     if (time < 60) {
-      console.log(`00:00:${time}`);
-      setTimeLeft(`00:00:${time}`);
-      // return `00:00:${time}`;
+      return `00:00:${time}`;
     } else if (time < 3600) {
       const minutes = Math.floor(time / 60);
       const secunds = time - (minutes * 60);
-      console.log(`00:${minutes}:${secunds}`);
-      setTimeLeft(`00:${minutes}:${secunds}`);
-      // return `00:${minutes}:${secunds}`;
+      return `00:${minutes}:${secunds}`;
     }else {
       const hours = Math.floor(time / 60 / 60);
       const minutes = Math.floor(time / 60) - (hours * 60);
       const secunds = time % 60;
-      console.log(`${hours}:${minutes}:${secunds}`);
-      setTimeLeft(`${hours}:${minutes}:${secunds}`);
-      // return `${hours}:${minutes}:${secunds}`;
+      return `${hours}:${minutes}:${secunds}`;
     }
   };
 
-  const getTimeLeft = () => {  
-    console.log(132);
+  const getTimeLeft = () => {
     if (videoRef.current) {
       if (videoRef.current.duration) {
-        return convertTime(Math.floor(videoRef.current.duration));
+        setTimeLeft(Math.floor(videoRef.current.duration));
       }
     }
   };
 
-  const changingTimeLeft = () => {   
-    timerRef.current = window.setTimeout(() => getTimeLeft(), 1000);
+  const decTimer = () => {
+    setTimeLeft((timerLeft) => timerLeft - 1);
+  };
+
+  const changingTimeLeft = () => {
+    timerRef.current = window.setInterval(() => decTimer(), 1000);
   };
 
   const toggleFullScreen = () => {
@@ -87,6 +84,15 @@ function Player () {
     }
   }, [film]);
 
+  useEffect(() => {
+    if (timeLeft === 0) {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+      setIsPlaying(false);
+    }
+  }, [timeLeft]);
+
   if (!film || isFilmLoaded) {
     return (
       <Loader />
@@ -105,7 +111,7 @@ function Player () {
             <progress className="player__progress" value="0" max="100"></progress>
             <div className="player__toggler" style={{ left: '0%' }}>Toggler</div>
           </div>
-          <div className="player__time-value">{timeLeft}</div>
+          <div className="player__time-value">{convertTime(timeLeft)}</div>
         </div>
 
         <div className="player__controls-row">
