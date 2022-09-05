@@ -1,4 +1,5 @@
 import React, { memo } from 'react';
+import { useConvertTime } from '../../hooks';
 import { IFilm } from '../../types/film';
 
 type Props = {
@@ -6,15 +7,6 @@ type Props = {
 }
 
 function FilmDetails ({ film }: Props) {
-  const convertTime = (time: number) => {
-    if (time < 60) {
-      return `${time}m`;
-    } else {
-      const hours = Math.floor(time / 60);
-      const minutes = time - (hours * 60);
-      return `${hours}h ${minutes}m`;
-    }
-  };
   return (
     <div className="film-card__text film-card__row">
       <div className="film-card__text-col">
@@ -40,7 +32,7 @@ function FilmDetails ({ film }: Props) {
       <div className="film-card__text-col">
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Run Time</strong>
-          <span className="film-card__details-value">{convertTime(film.runTime)}</span>
+          <span className="film-card__details-value">{useConvertTime(film.runTime)}</span>
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Genre</strong>

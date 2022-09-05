@@ -62,7 +62,7 @@ function App() {
         />
         <Route
           path={AppRoute.Player}
-          element={<Player films={films} />}
+          element={<Player />}
         />
         <Route
           path="*"
